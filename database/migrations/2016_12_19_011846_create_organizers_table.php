@@ -16,6 +16,8 @@ class CreateOrganizersTable extends Migration
         Schema::create('organizers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('description');
+            $table->string('website');
             $table->integer('user_id')->unsigned();
             $table->timestamps();
 

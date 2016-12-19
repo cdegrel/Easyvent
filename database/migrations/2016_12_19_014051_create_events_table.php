@@ -19,10 +19,20 @@ class CreateEventsTable extends Migration
             $table->text('description');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
+            $table->string('address');
+            $table->char('postal_code', 5);
+            $table->string('city');
+            $table->string('country');
+            $table->integer('organizer_id')->unsigned();
             $table->integer('category_id')->unsigned();
             $table->integer('type_id')->unsigned();
             $table->timestamps();
 
+            $table->foreign('organizer_id')
+                ->references('id')
+                ->on('organizers')
+                ->onDelete('restrict')
+                ->onUpgrade('restrict');
             $table->foreign('category_id')
                 ->references('id')
                 ->on('categories')
@@ -44,6 +54,7 @@ class CreateEventsTable extends Migration
     public function down()
     {
         Schema::table('events', function (Blueprint $table) {
+            $table->dropForeign('events_organizer_id_foreign');
             $table->dropForeign('events_category_id_foreign');
             $table->dropForeign('events_type_id_foreign');
         });
