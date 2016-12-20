@@ -26,7 +26,14 @@ class CreateAccountsTable extends Migration
             $table->char('mobile_phone', 10);
             $table->string('description');
             $table->string('photo');
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('restrict')
+                ->onUpdate('restrict');
         });
     }
 
@@ -37,6 +44,10 @@ class CreateAccountsTable extends Migration
      */
     public function down()
     {
+        Schema::table('accounts', function (Blueprint $table) {
+            $table->dropForeign('accounts_user_id_foreign');
+        });
+
         Schema::dropIfExists('accounts');
     }
 }
