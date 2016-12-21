@@ -36,4 +36,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Organizer::class);
     }
+
+    public function event()
+    {
+        return $this->belongsToMany(Event::class);
+    }
 }
