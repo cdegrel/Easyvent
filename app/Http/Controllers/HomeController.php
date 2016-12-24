@@ -8,6 +8,11 @@ class HomeController extends Controller
 {
     public function __invoke()
     {
-        return view('front.index')->with('events', Event::all()->take(9));
+        $events = Event::all()->take(9);
+        foreach ($events as $event){
+            $event['tickets'] = Event::find($event->id)->ticket;
+        }
+
+        return view('front.test')->with('events', $events);
     }
 }
