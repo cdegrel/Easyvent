@@ -18,7 +18,7 @@ class CreateTicketsTable extends Migration
             $table->string('title');
             $table->float('price', 8, 2);
             $table->integer('quantity');
-            $table->integer('event_id')->unsigned();
+            $table->integer('event_id')->unsigned()->index();
             $table->timestamps();
 
             $table->foreign('event_id')

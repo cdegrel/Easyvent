@@ -23,9 +23,9 @@ class CreateEventsTable extends Migration
             $table->char('postal_code', 5);
             $table->string('city');
             $table->string('country');
-            $table->integer('organizer_id')->unsigned();
-            $table->integer('category_id')->unsigned();
-            $table->integer('type_id')->unsigned();
+            $table->integer('organizer_id')->unsigned()->index();
+            $table->integer('category_id')->unsigned()->index();
+            $table->integer('type_id')->unsigned()->index();
             $table->timestamps();
 
             $table->foreign('organizer_id')

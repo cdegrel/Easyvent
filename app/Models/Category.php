@@ -8,6 +8,6 @@ class Category extends Model
 {
     public function event()
     {
-        return $this->morphMany(Event::class, 'eventable');
+        return $this->hasMany(Event::class);
     }
 }

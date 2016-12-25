@@ -26,7 +26,7 @@ class CreateAccountsTable extends Migration
             $table->char('mobile_phone', 10);
             $table->string('description');
             $table->string('photo');
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->index();
             $table->timestamps();
 
             $table->foreign('user_id')

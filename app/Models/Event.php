@@ -16,13 +16,18 @@ class Event extends Model
         return $this->hasMany(Ticket::class);
     }
 
-    public function eventable()
-    {
-        return $this->morphTo();
-    }
-
     public function user()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
     }
 }
