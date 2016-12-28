@@ -14,7 +14,17 @@
 // Home
 Route::get('/', 'HomeController')->name('home');
 
+// Admin panel
+Route::group(['middleware' => 'web'], function () {
+
+    Auth::routes();
+
+    Route::get('dashboard', 'AdminController')->name('dashboard');
+
+    Route::resource('account', 'AccountController');
+    Route::resource('events', 'EventController');
+});
 
 // Auth
-Auth::routes();
+
 
