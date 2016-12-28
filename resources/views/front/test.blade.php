@@ -233,44 +233,24 @@
 <section class="wrapper style1">
     <div class="inner">
 
-        <a href="{!! route('events.create') !!}">Event création</a>
-        
-        <div class="flex flex-3">
 
-            @foreach($events as $event)
+        @if (Auth::guest())
+            <li><a href="{{ url('/login') }}">Login</a></li>
+            <li><a href="{{ url('/register') }}">Register</a></li>
+        @else
+            vous êtes bien connecté  !
 
-            <div class="col">
-                <div class="ticket-card">
-                    <div class="cover">
-                        <img src="http://s28.postimg.org/p916fev0t/week.jpg" alt="" />
-                        <div class="info">
-                            <div class="going">
-                                <i class="fa fa-group"></i>
-                            </div>
-                            <div class="tickets-left">
-                                <i class="fa fa-ticket"></i>
-                            </div>
-                        </div>
-                    </div>
+            <a href="{!! route('dashboard') !!}">Event création</a>
+            <a href="{{ url('/logout') }}"
+               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                Logout
+            </a>
 
-                    <div class="body">
-                        <div class="artist">
-                            <h6 class="info">{{ $event->title }}</h6>
-                            <h4 class="name">{{ $event->start_date }}</h4>
-                        </div>
-                        <div class="price">
-                            <div class="from">From</div>
-                            <div class="value">
-                                <b>$</b>599
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            @endforeach
-
-        </div>
+            <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                {{ csrf_field() }}
+            </form>
+        @endif
 
     </div>
 </section>

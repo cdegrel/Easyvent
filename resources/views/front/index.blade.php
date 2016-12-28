@@ -2,31 +2,26 @@
 
 @section('main')
 
-    @foreach($events as $event)
-        {{ $event->title }}<br>
-        {{ $event->description }}<br>
-        {{ $event->start_date }}<br>
-        {{ $event->end_date }}<br>
-    @endforeach
+    <section id="banner" data-video="images/banner">
+        <div class="inner">
+            <header>
+                <h1>Easyvent</h1>
+                <p>Créez, vivez et partagez des experiences uniques gâce à notre plateforme évènementielle<br />
+                    Organiser des évènements n'a jamais été aussi simple.</p>
+            </header>
+            <a href="#main" class="button big alt scrolly">C'est parti !</a>
+        </div>
 
-    @if (Auth::guest())
-        <li><a href="{{ url('/login') }}">Login</a></li>
-        <li><a href="{{ url('/register') }}">Register</a></li>
-    @else
-        vous êtes bien connecté  !
+    </section>
 
-        <a href="">Panel admin</a>
-        <a href="{{ url('/logout') }}"
-           onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-            Logout
-        </a>
+    <section class="wrapper style1">
+        <div class="inner">
 
-        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-            {{ csrf_field() }}
-        </form>
 
-        {{ Auth::user() }}
-    @endif
+
+
+
+        </div>
+    </section>
 
 @endsection
