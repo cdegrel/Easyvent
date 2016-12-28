@@ -18,7 +18,7 @@ class AccountsTableSeeder extends Seeder
             'id' => 1,
             'name' => 'Degrelle',
             'first_name' => 'Cédric',
-            'sex' => 'homme',
+            'sex' => 'm',
             'address' => '12 rue des raspberry',
             'postal_code' => '45123',
             'city' => 'Maville',
@@ -26,7 +26,6 @@ class AccountsTableSeeder extends Seeder
             'phone' => '0123456789',
             'mobile_phone' => '0123456789',
             'description' => 'I like Waffles ;)',
-            'photo' => 'degrelle_cedric.png',
             'user_id' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now()

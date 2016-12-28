@@ -17,7 +17,7 @@ class CreateAccountsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('first_name');
-            $table->enum('sex', ['homme', 'femme', 'inconnu']);
+            $table->enum('sex', ['m', 'w', 'o']);
             $table->string('address');
             $table->char('postal_code', 5);
             $table->string('city');
@@ -25,7 +25,7 @@ class CreateAccountsTable extends Migration
             $table->char('phone', 10);
             $table->char('mobile_phone', 10);
             $table->string('description');
-            $table->string('photo');
+            $table->string('avatar')->default('default.png');
             $table->integer('user_id')->unsigned()->index();
             $table->timestamps();
 
