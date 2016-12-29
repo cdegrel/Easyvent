@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Panel admin</title>
 
+    {!! Html::script('/js/jquery.min.js') !!}
+
     {!! Html::style('css/bootstrap.min.css') !!}
     {!! Html::style('css/font-awesome.min.css') !!}
     {!! Html::style('css/back.css') !!}
@@ -45,6 +47,24 @@
                                     <a href="{!! route('account.edit', Auth::user()->id) !!}">
                                         <i class="fa fa-user"></i> Profil
                                     </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <i class="fa fa-group"></i>Organisateurs <span class="fa fa-chevron-down"></span>
+                                    </a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="{!! route('organizer.create') !!}">Créer nouvel organisateur</a></li>
+                                        <li><a href="{!! route('organizer.index') !!}">Liste organisateurs</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a>
+                                        <i class="fa"></i>Evenements <span class="fa fa-chevron-down"></span>
+                                    </a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="{!! route('event.create') !!}">Créer nouveau évènement</a></li>
+                                        <li><a href="{!! route('event.index') !!}">Liste évènements</a></li>
+                                    </ul>
                                 </li>
                             </ul>
                         </div>
@@ -183,8 +203,9 @@
         </div>
     </div>
 
-    {!! Html::script('js/jquery.min.js') !!}
-    {!! Html::script('js/back/back.js') !!}
+    {!! Html::script('/js/back/back.js') !!}
+    {!! Html::script('/js/back/daterangepicker.js') !!}
+    {!! Html::script('/js/back/moment.min.js') !!}
     {!! Html::script('https://maps.googleapis.com/maps/api/js?key=AIzaSyADuY6gi1tLF2OCwMbvX28dm6FFE8fnsvc&libraries=places') !!}
 
 </body>

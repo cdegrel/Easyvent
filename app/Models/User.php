@@ -37,8 +37,13 @@ class User extends Authenticatable
         return $this->hasMany(Organizer::class);
     }
 
-    public function event()
+    public function participate()
     {
         return $this->belongsToMany(Event::class);
+    }
+
+    public function organizate()
+    {
+        return $this->hasManyThrough(Event::class, Organizer::class);
     }
 }

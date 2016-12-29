@@ -24,6 +24,7 @@ class EventsTableSeeder extends Seeder
             'postal_code' => '45123',
             'city' => 'Eventville',
             'country' => 'France',
+            'is_publish' => true,
             'organizer_id' => 1,
             'category_id' => 1,
             'type_id' => 1,

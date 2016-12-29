@@ -22,9 +22,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::get('dashboard', 'AdminController')->name('dashboard');
 
     Route::resource('account', 'AccountController');
-    Route::resource('events', 'EventController');
+    Route::resource('organizer', 'OrganizerController');
+    Route::resource('event', 'EventController');
 });
-
-// Auth
 
 

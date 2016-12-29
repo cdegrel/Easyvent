@@ -23,6 +23,7 @@ class CreateEventsTable extends Migration
             $table->char('postal_code', 5);
             $table->string('city');
             $table->string('country');
+            $table->boolean('is_publish')->default(false);
             $table->integer('organizer_id')->unsigned()->index();
             $table->integer('category_id')->unsigned()->index();
             $table->integer('type_id')->unsigned()->index();
