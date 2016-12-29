@@ -97,8 +97,8 @@
                                         {!! $errors->first('country', '<small class="help-block" style="color: red;">:message</small>') !!}
                                     </div>
 
-                                    <input id="start_date" type="hidden" value="{{ date('d/m/Y H:m', strtotime($event->start_date)) }}">
-                                    <input id="end_date" type="hidden" value="{{ date('d/m/Y H:m', strtotime($event->end_date)) }}">
+                                    <input id="start_date" type="hidden" value="{{ date('d/m/Y H:i', strtotime($event->start_date)) }}">
+                                    <input id="end_date" type="hidden" value="{{ date('d/m/Y H:i', strtotime($event->end_date)) }}">
 
                                     <div class="col-md-12 col-sm-12 col-xs-12  form-group">
                                         {!! Form::label('date', "Date de l'évènement * :") !!}

@@ -13,6 +13,6 @@ class HomeController extends Controller
             $event['tickets'] = Event::find($event->id)->ticket;
         }
 
-        return view('front.test')->with('events', $events);
+        return view('front.index')->with('events', $events);
     }
 }

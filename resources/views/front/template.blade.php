@@ -6,15 +6,19 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Easyvent</title>
 
-    {!! Html::style('css/front.css')!!}
-
-    {!! Html::script('js/jquery.min.js') !!}
+    {!! Html::style('/css/front.css')!!}
+    {!! Html::script('/js/jquery.min.js') !!}
 </head>
 <body>
 
     <header id="header">
         <h1><a href="#">Easyvent</a></h1>
-        <a href="">test</a>
+        <ul id="ul-menu" style="list-style-type: none; margin: 0 auto;">
+            <li style="@if(!Auth::guest()) bottom: 11px; position: relative; @endif display: inline; font-weight: 700; padding-right: 25px;"><a href="">PARCOURIR</a></li>
+            @if(Auth::guest()) <li style="display: inline; font-weight: 700; padding-right: 25px;"><a href="">SE CONNECTER</a></li>
+            @else <li style="display: inline; padding-right: 35px; position: relative; top: 3px;"><a href=""><img height="40" src="img/icon/user.png" alt=""></a></li>
+            @endif
+        </ul>
         <a href="#menu">Menu</a>
     </header>
 
@@ -73,10 +77,10 @@
         </div>
     </footer>
 
-    {!! Html::script('js/jquery.scrolly.min.js') !!}
-    {!! Html::script('js/skel.min.js') !!}
-    {!! Html::script('js/util.js') !!}
-    {!! Html::script('js/main.js') !!}
+    {!! Html::script('/js/jquery.scrolly.min.js') !!}
+    {!! Html::script('/js/skel.min.js') !!}
+    {!! Html::script('/js/util.js') !!}
+    {!! Html::script('/js/main.js') !!}
 
 </body>
 </html>

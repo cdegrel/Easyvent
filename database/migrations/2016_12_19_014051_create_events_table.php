@@ -17,8 +17,8 @@ class CreateEventsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->text('description');
-            $table->dateTime('start_date');
-            $table->dateTime('end_date');
+            $table->dateTime('start_date')->default(\Carbon\Carbon::now());
+            $table->dateTime('end_date')->default(\Carbon\Carbon::now());;
             $table->string('address');
             $table->char('postal_code', 5);
             $table->string('city');
