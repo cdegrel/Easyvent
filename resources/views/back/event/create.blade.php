@@ -1,5 +1,7 @@
 @extends('back.template')
 
+{{ Html::style('//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css') }}
+
 @section('main')
 
     <div class="">
@@ -11,7 +13,7 @@
             <div class="title_right">
                 <div class="pull-right">
                     <div class="btn-group">
-                      <button class="btn btn-default" type="button">Sauvegarder</button>
+                        {{ Form::submit('Sauvegarder', ['class' => 'btn btn-info', 'form' => 'create_event']) }}
                       <button class="btn btn-default" type="button">Aperçu</button>
                       <button class="btn btn-success" type="button">Publier</button>
                     </div>
@@ -60,7 +62,7 @@
                                 </li>
                             </ul>
 
-                                {!! Form::open(['url' => route('event.store'), 'class' => 'form-horizontal form-label-left']) !!}
+                                {!! Form::open(['url' => route('event.store'), 'class' => 'form-horizontal form-label-left', 'id' => 'create_event']) !!}
                                 <div id="step-1">
                                     <h2 class="StepTitle" style="margin-left: 20px;">Description de l'évènement</h2>
                                     <hr>
@@ -69,6 +71,7 @@
                                         <div class="col-md-12 col-sm-12 col-xs-12  form-group">
                                             {!! Form::label('title', "Titre de l'évènement * :") !!}
                                             {!! Form::text('title', null, ['class' => 'form-control', 'placeholder' => 'Titre distinctif']) !!}
+                                            {!! $errors->first('title', '<small class="help-block" style="color: red;">:message</small>') !!}
                                         </div>
                                     </div>
 
@@ -76,46 +79,37 @@
                                         <div class="col-md-12 col-sm-12 col-xs-12  form-group">
                                             <label for="">Adresse * :</label>
                                             {!! Form::text('address', null, ['class' => 'form-control', 'placeholder' => 'Adresse']) !!}
+                                            {!! $errors->first('address', '<small class="help-block" style="color: red;">:message</small>') !!}
                                         </div>
 
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group">
                                             {!! Form::text('city', null, ['class' => 'form-control', 'placeholder' => 'Ville']) !!}
+                                            {!! $errors->first('city', '<small class="help-block" style="color: red;">:message</small>') !!}
                                         </div>
 
                                         <div class="col-md-6 col-sm-6 col-xs-12 form-group">
                                             {!! Form::text('postal_code', null, ['class' => 'form-control', 'placeholder' => 'Code postal']) !!}
+                                            {!! $errors->first('postal_code', '<small class="help-block" style="color: red;">:message</small>') !!}
                                         </div>
 
                                         <div class="col-md-12 col-sm-12 col-xs-12  form-group">
                                             {!! Form::text('country', null, ['class' => 'form-control', 'placeholder' => 'Pays']) !!}
+                                            {!! $errors->first('country', '<small class="help-block" style="color: red;">:message</small>') !!}
+                                        </div>
+
+                                        <div class="col-md-12 col-sm-12 col-xs-12  form-group">
+                                            {!! Form::label('date', "Date de l'évènement * :") !!}
+                                            {!! Form::text('daterange', null, ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
 
                                     <div class="col-md-3 col-sm-3 col-xs-12" id="map"></div>
 
-                                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                        <div class="col-md-6 col-sm-6 col-xs-6 form-group">
-                                            <label for="">Début * :</label>
-                                            {!! Form::text('title', \Carbon\Carbon::now()->format('d/m/Y'), ['class' => 'form-control']) !!}
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-6 form-group">
-                                            {!! Form::text('title', \Carbon\Carbon::now()->format('H:m'), ['class' => 'form-control', 'placeholder' => 'Titre distinctif', 'style' => 'margin-top: 24px;']) !!}
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-sm-6 col-xs-6">
-                                        <div class="col-md-6 col-sm-6 col-xs-6 form-group">
-                                            <label for="">Fin * :</label>
-                                            {!! Form::text('title', \Carbon\Carbon::now()->format('d/m/Y'), ['class' => 'form-control']) !!}
-                                        </div>
-                                        <div class="col-md-6 col-sm-6 col-xs-6 form-group">
-                                            {!! Form::text('title', \Carbon\Carbon::now()->format('H:m'), ['class' => 'form-control', 'placeholder' => 'Titre distinctif', 'style' => 'margin-top: 24px;']) !!}
-                                        </div>
-                                    </div>
-
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="col-md-12 col-sm-12 col-xs-12  form-group">
                                             {!! Form::label('description', "Description de l'évènement * :") !!}
-                                            {!! Form::textarea('description', null, ['class' => 'form-control', 'name' => 'desc_ckeditor']) !!}
+                                            {!! Form::textarea('description', null, ['class' => 'form-control', 'id' => 'desc_ckeditor']) !!}
+                                            {!! $errors->first('description', '<small class="help-block" style="color: red;">:message</small>') !!}
                                         </div>
                                     </div>
 
@@ -182,6 +176,20 @@
         CKEDITOR.replace('desc_ckeditor');
     </script>
     <script>
+        $(function() {
+            $('input[name="daterange"]').daterangepicker({
+                timePicker24Hour: true,
+                timePicker: true,
+                timePickerIncrement: 10,
+                locale: {
+                    format: 'DD/MM/YYYY HH:mm',
+                    applyLabel: 'OK',
+                    cancelLabel: 'Annuler'
+                }
+            });
+        });
+    </script>
+    <script>
         $(document).ready(function() {
             $('#wizard').smartWizard();
 
@@ -204,3 +212,6 @@
     </script>
 
 @endsection
+
+{!! Html::script('/js/back/moment.min.js') !!}
+{!! Html::script('/js/back/daterangerpicker.js') !!}

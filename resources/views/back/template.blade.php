@@ -9,9 +9,10 @@
 
     {!! Html::script('/js/jquery.min.js') !!}
 
-    {!! Html::style('css/bootstrap.min.css') !!}
-    {!! Html::style('css/font-awesome.min.css') !!}
-    {!! Html::style('css/back.css') !!}
+    {!! Html::style('/css/bootstrap.min.css') !!}
+    {!! Html::style('/css/font-awesome.min.css') !!}
+    {!! Html::style('/css/sweetalert2.min.css') !!}
+    {!! Html::style('/css/back.css') !!}
 </head>
 <body class="nav-md">
 
@@ -203,6 +204,7 @@
         </div>
     </div>
 
+    {!! Html::script('/js/sweetalert2.min.js') !!}
     {!! Html::script('/js/back/back.js') !!}
     {!! Html::script('/js/back/daterangepicker.js') !!}
     {!! Html::script('/js/back/moment.min.js') !!}

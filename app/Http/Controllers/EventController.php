@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EventRequest;
 use App\Models\Category;
 use App\Models\Event;
 use App\Models\Type;
@@ -37,9 +38,10 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EventRequest $request)
     {
-        //
+        $event = Event::create($request->all());
+        return redirect(route('event.edit'), $event);
     }
 
     /**
@@ -71,12 +73,15 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EventRequest $request, $id)
     {
-        var_dump($request);
         $event = Event::findOrFail($id);
-        //$event->update($request->all());
-        //return redirect(route('event.edit'), $id);
+        $timestamp = $this->formatTimestamp($request->daterange);
+        $request->start_date = $timestamp[0];
+        $request->end_date = $timestamp[1];
+
+        $event->update($request->all());
+        return redirect(route('event.edit', $id));
     }
 
     /**
@@ -87,6 +92,19 @@ class EventController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Event::destroy($id);
+    }
+
+    private function formatTimestamp($timestamp)
+    {
+        $timestamp = explode("-", $timestamp);
+
+        $date1 = explode("/", str_split($timestamp[0], 10)[0]);
+        $time1 = str_split($timestamp[0], 10)[1];
+
+        $date2 = explode("/", str_split($timestamp[1], 10)[0]);
+        $time2 = str_split($timestamp[1], 10)[1];
+
+        return [$date1[2].'-'.$date1[1].'-'.$date1[0].' '.$time1, $date2[2].'-'.$date2[1].'-'.$date2[0].' '.$time2];
     }
 }
