@@ -67,6 +67,8 @@
                                 <h2 class="StepTitle" style="margin-left: 20px;">Description de l'évènement</h2>
                                 <hr>
 
+                                <input name="id" type="hidden" value="{{ $event->id }}">
+
                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                     <div class="col-md-12 col-sm-12 col-xs-12  form-group">
                                         {!! Form::label('title', "Titre de l'évènement * :") !!}
@@ -223,6 +225,66 @@
                 '</tr>'
             );
         }
+    </script>
+
+@endsection
+
+@section('script')
+
+    <script>
+        $(function(){
+
+            var f_event = $('form#edit_event'),
+                tab_billet = $('tbody#tab_billet');
+
+            f_event.submit(function(e){
+                e.preventDefault();
+
+                var tickets = [];
+                $.each(tab_billet.find('tr'), function(){
+                    tickets.push({
+                        title: $(this).find('input[name="title"]').val(),
+                        quantity: $(this).find('input[name="quantity"]').val(),
+                        price: $(this).find('input[name="price"]').val()
+                    });
+                });
+
+                var data = {
+                    title: $('input[name="title"]').val(),
+                    address: $('input[name="address"]').val(),
+                    city: $('input[name="city"]').val(),
+                    postal_code: $('input[name="postal_code"]').val(),
+                    country: $('input[name="country"]').val(),
+                    daterange: $('input[name="daterange"]').val(),
+                    description: $('textarea[name="description"]').val(),
+                    organizer_id: $('select[name="organizer_id"]').val(),
+                    category_id: $('select[name="category_id"]').val(),
+                    type_id: $('select[name="type_id"]').val(),
+                    tickets: tickets
+                };
+
+                $.ajax({
+                    url: '/event/'+$('input[name="id"]').val(),
+                    type: 'PUT',
+                    dataType: 'json',
+                    data: data,
+
+                    success: function (data) {
+                        console.debug(data);
+                    },
+                    error: function (error) {
+                        swal({
+                            title: 'ERREUR',
+                            html: $('<div>')
+                                .addClass('some-class')
+                                .text(error.msg),
+                            animation: false,
+                            customClass: 'animated tada'
+                        });
+                    }
+                });
+            });
+        });
     </script>
 
 @endsection

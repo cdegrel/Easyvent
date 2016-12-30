@@ -10,6 +10,6 @@ class Account extends Model
 
     public function user()
     {
-        return $this->belongsTo(Account::class);
+        return $this->belongsTo(User::class);
     }
 }

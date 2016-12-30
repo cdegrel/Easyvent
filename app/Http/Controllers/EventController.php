@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\EventRequest;
 use App\Models\Category;
 use App\Models\Event;
+use App\Models\Ticket;
 use App\Models\Type;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -78,12 +83,30 @@ class EventController extends Controller
      */
     public function update(EventRequest $request, $id)
     {
+        if(!$request->ajax()) return redirect(route('event.edit', $id));
+
         $event = Event::findOrFail($id);
         $timestamp = $this->formatTimestamp($request->daterange);
 
-        $event->update($request->all());
-        $event->update(['start_date' => $timestamp[0], 'end_date' => $timestamp[1]]);
-        return redirect(route('event.edit', $id));
+        if($event->update($request->all())){
+            $event->update(['start_date' => $timestamp[0], 'end_date' => $timestamp[1]]);
+
+//            foreach ($request->tickets as $ticket){
+//                if($ticket->id == null)
+//                    Ticket::create([
+//                        'title' => $ticket->title,
+//                        'quantity' => $ticket->quantity,
+//                        'price' => $ticket->price,
+//                        'event_id' => $request->id]);
+//                else{
+//                    $ticketSearch = Ticket::findOrFail($ticket->id);
+//                    $ticketSearch->update($ticket);
+//                }
+//            }
+
+            return response()->json(['msg' => $request->tickets], 200);
+        } else
+            return response()->json(['msg' => $request->all()], 500);
     }
 
     /**

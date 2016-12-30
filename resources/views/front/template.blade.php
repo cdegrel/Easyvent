@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Easyvent</title>
 
     {!! Html::style('/css/front.css')!!}
+    {!! Html::style('/css/sweetalert2.min.css') !!}
     {!! Html::script('/js/jquery.min.js') !!}
 </head>
 <body>
@@ -15,7 +17,9 @@
         <h1><a href="{!! route('home') !!}">Easyvent</a></h1>
         <ul id="ul-menu" style="list-style-type: none; margin: 0 auto;">
             <li style="@if(!Auth::guest()) bottom: 11px; position: relative; @endif display: inline; font-weight: 700; padding-right: 25px;"><a href="">PARCOURIR</a></li>
-            @if(Auth::guest()) <li style="display: inline; font-weight: 700; padding-right: 25px;"><a href="">SE CONNECTER</a></li>
+            @if(Auth::guest())
+                <li style="display: inline; font-weight: 700; padding-right: 25px;"><a id="register" href="javascript:void(0)">OUVRIR UN COMPTE</a></li>
+                <li style="display: inline; font-weight: 700; padding-right: 25px;"><a href="">SE CONNECTER</a></li>
             @else <li style="display: inline; padding-right: 35px; position: relative; top: 3px;"><a href=""><img height="40" src="/uploads/avatars/{{ Auth::user()->account->avatar }}" alt=""></a></li>
             @endif
         </ul>
@@ -78,9 +82,15 @@
     </footer>
 
     {!! Html::script('/js/jquery.scrolly.min.js') !!}
+    {!! Html::script('/js/sweetalert2.min.js') !!}
     {!! Html::script('/js/skel.min.js') !!}
     {!! Html::script('/js/util.js') !!}
     {!! Html::script('/js/main.js') !!}
+
+    <script>
+  
+
+    </script>
 
 </body>
 </html>

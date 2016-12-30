@@ -4,12 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AccountRequest;
 use App\Models\Account;
+use GuzzleHttp\Psr7\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Image;
 
 class AccountController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -46,6 +53,7 @@ class AccountController extends Controller
         if($request->hasFile('avatar')){
             $avatar = $request->file('avatar');
             $filename = time().'.'.$avatar->getClientOriginalExtension();
+            //Storage::put('uploads/'.Auth::user()->name.'/avatars/'.$filename, $filename);
             Image::make($avatar)->resize(220, 220)->save(public_path('/uploads/avatars/'.$filename));
 
             $account = Account::findOrFail(Auth::user()->id);
@@ -65,6 +73,12 @@ class AccountController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function showAvatar($id)
+    {
+        $account = Account::findOrFail($id);
+        return new Response(Storage::get('uploads/'.$account->user->name.'/avatars/'.$account->photo), 200);
     }
 
     /**

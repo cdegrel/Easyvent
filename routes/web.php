@@ -30,6 +30,7 @@ Route::group(['middleware' => 'web'], function () {
     Route::resource('event', 'EventController');
 
     Route::post('account.storeAvatar', 'AccountController@storeAvatar')->name('avatar');
+    Route::get('account.showAvatar', 'AccountController@showAvatar');
 });
 
 
