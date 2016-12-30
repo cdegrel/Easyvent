@@ -24,6 +24,8 @@ class HomeController extends Controller
      */
     public function show($id)
     {
+        $event = Event::findOrFail($id);
+        if(!$event->is_publish) abort(404);
         return view('front.event')->with('event', Event::find($id));
     }
 }
