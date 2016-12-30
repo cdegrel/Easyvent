@@ -5,11 +5,12 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Panel admin</title>
 
     {!! Html::script('/js/jquery.min.js') !!}
 
-    {!! Html::style('/css/bootstrap.min.css') !!}
+    {!! Html::style('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css') !!}
     {!! Html::style('/css/font-awesome.min.css') !!}
     {!! Html::style('/css/sweetalert2.min.css') !!}
     {!! Html::style('/css/back.css') !!}
@@ -164,7 +165,17 @@
         </div>
     </div>
 
-    {!! Html::script('/js/back/bootstrap.min.js') !!}
+    @yield('script')
+
+    <script>
+        $(function(){
+            $.ajaxSetup({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
+            });
+        });
+    </script>
+
+    {!! Html::script('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js') !!}
     {!! Html::script('/js/sweetalert2.min.js') !!}
     {!! Html::script('/js/back/back.js') !!}
     {!! Html::script('/js/back/daterangepicker.js') !!}

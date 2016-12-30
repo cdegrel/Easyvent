@@ -47,6 +47,8 @@
 
                         <h3>Coordonnées</h3>
 
+                        <input name="id" type="hidden" value="{{ $account->id }}">
+
                         <div class="col-md-6 col-sm-6 col-xs-12 form-group">
                             {!! Form::label('name', 'Nom * :') !!}
                             {!! Form::text('name', $account->name, ['class' => 'form-control']) !!}
@@ -109,20 +111,6 @@
                             {!! Form::file('avatar', ['file_extension' => '.png']) !!}
                         </div>
 
-                        {{--<div class="col-md-4 col-sm-4 col-xs-4">--}}
-                            {{--{!! Form::label('day', 'Jour  :') !!}--}}
-                            {{--{!! Form::selectRange('day', 1, 31, 3) !!}--}}
-                        {{--</div>--}}
-
-                        {{--<div class="col-md-4 col-sm-4 col-xs-4">--}}
-                            {{--{!! Form::label('month', 'Mois  :') !!}--}}
-                            {{--{!! Form::selectMonth('month') !!}--}}
-                        {{--</div>--}}
-
-                        {{--<div class="col-md-4 col-sm-4 col-xs-4">--}}
-                            {{--{!! Form::label('year', 'Année  :') !!}--}}
-                        {{--</div>--}}
-
                         {!! Form::close() !!}
                     </div>
                 </div>
@@ -148,5 +136,60 @@
             </div>
         </div>
     </div>
+
+@endsection
+
+@section('script')
+
+    <script>
+        $(function(){
+
+            var f_profile = $('form#edit_profile'),
+                f_user = $('form#edit_user');
+
+            f_profile.submit(function(e){
+                 e.preventDefault();
+
+                 var data = {
+                     name: $('input[name="name"]').val(),
+                     first_name: $('input[name="first_name"]').val(),
+                     sex: $('input[checked="checked"]').val(),
+                     address: $('input[name="address"]').val(),
+                     postal_code: $('input[name="postal_code"]').val(),
+                     city: $('input[name="city"]').val(),
+                     country: $('input[name="country"]').val(),
+                     phone: $('input[name="phone"]').val(),
+                     mobile_phone: $('input[name="mobile_phone"]').val()
+                 };
+
+                 $.ajax({
+                     url: '/account/'+$('input[name="id"]').val(),
+                     type: 'PUT',
+                     dataType: 'json',
+                     data: data,
+
+                     success: function (data) {
+
+                     },
+                     error: function (msg) {
+                         swal({
+                             title: 'ERREUR',
+                             html: $('<div>')
+                                 .addClass('some-class')
+                                 .text(msg),
+                             animation: false,
+                             customClass: 'animated tada'
+                         })
+                     }
+                 });
+            });
+
+            f_user.submit(function(e){
+                e.preventDefault();
+
+
+            });
+        });
+    </script>
 
 @endsection

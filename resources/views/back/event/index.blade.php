@@ -57,7 +57,7 @@
                                     <td>{{ $event->is_publish }}</td>
                                     <td>
                                         <div class="btn-group">
-                                            <a class="btn btn-info" type="button">Visualiser</a>
+                                            <a href="{!! url('/e/'.$event->id) !!}" class="btn btn-info" type="button">Visualiser</a>
                                             <a href="{!! route('event.edit', $event->id) !!}" class="btn btn-success" type="button" @if($event->is_publish) disabled @endif>Editer</a>
                                             <a href="javascript:void(0)" onclick="confirmDel({{ $event->id }})" class="btn btn-danger" type="button">Supprimer</a>
                                         </div>

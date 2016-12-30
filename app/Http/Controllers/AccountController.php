@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Account;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Intervention\Image\Image;
 
 class AccountController extends Controller
@@ -70,10 +71,15 @@ class AccountController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $account = Account::findOrFail($id);
-        $this->updateAvatar($request);
-        $account->update($request->all());
-        return redirect(route('account.edit', $id));
+        if($request->ajax()){
+            $account = Account::findOrFail($id);
+            $this->updateAvatar($request);
+
+            if($account->update($request->all()))
+                return response()->json(['msg' => 'Profil utilisateur édité !'], 200);
+            else
+                return response()->json(['msg' => "L'utilisateur n'a pu être modifié"], 500);
+        }
     }
 
     /**

@@ -15,4 +15,15 @@ class HomeController extends Controller
 
         return view('front.index')->with('events', $events);
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        return view('front.event')->with('event', Event::find($id));
+    }
 }

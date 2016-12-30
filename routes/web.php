@@ -14,6 +14,10 @@
 // Home
 Route::get('/', 'HomeController')->name('home');
 
+Route::get('/parcourir', 'HomeController');
+
+Route::get('/e/{id}', 'HomeController@show');
+
 // Admin panel
 Route::group(['middleware' => 'web'], function () {
 
