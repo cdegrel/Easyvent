@@ -28,6 +28,8 @@ Route::group(['middleware' => 'web'], function () {
     Route::resource('account', 'AccountController');
     Route::resource('organizer', 'OrganizerController');
     Route::resource('event', 'EventController');
+
+    Route::post('account.storeAvatar', 'AccountController@storeAvatar')->name('avatar');
 });
 
 

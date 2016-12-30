@@ -16,7 +16,7 @@
         <ul id="ul-menu" style="list-style-type: none; margin: 0 auto;">
             <li style="@if(!Auth::guest()) bottom: 11px; position: relative; @endif display: inline; font-weight: 700; padding-right: 25px;"><a href="">PARCOURIR</a></li>
             @if(Auth::guest()) <li style="display: inline; font-weight: 700; padding-right: 25px;"><a href="">SE CONNECTER</a></li>
-            @else <li style="display: inline; padding-right: 35px; position: relative; top: 3px;"><a href=""><img height="40" src="/img/icon/user.png" alt=""></a></li>
+            @else <li style="display: inline; padding-right: 35px; position: relative; top: 3px;"><a href=""><img height="40" src="/uploads/avatars/{{ Auth::user()->account->avatar }}" alt=""></a></li>
             @endif
         </ul>
         <a href="#menu">Menu</a>

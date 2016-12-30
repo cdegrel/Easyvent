@@ -19,6 +19,7 @@
                 <div class="x_title">
                     <h2>Informations du compte</h2>
                     <ul class="nav navbar-right panel_toolbox">
+                        <li>{!! Form::submit('Editer compte', ['class' => 'btn btn-success', 'files' => true, 'form' => 'edit_profile']) !!}</li>
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a></li>
                         <li><a class="close-link"><i class="fa fa-close"></i></a></li>
                     </ul>
@@ -27,18 +28,19 @@
 
                 <div class="x_content">
                     <div class="col-md-3 col-sm-3 col-xs-12 profile_left">
+                        <h3>Avatar</h3><br>
                         <div class="profile_img">
                             <div id="crop-avatar">
-                                <img class="img-responsive avatar-view" src="/img/avatars/{{ $account->avatar }}" width="220" alt="Avatar" title="Changer avatar">
+                                <img class="img-responsive avatar-view" src="/uploads/avatars/{{ $account->avatar }}" width="220" alt="Avatar" title="Changer avatar">
                             </div>
                         </div>
-                        <h3>{{ $account->name }} {{ $account->first_name }}</h3>
-                        <ul class="list-unstyled user_data">
-                            <li>
-                                <i class="fa fa-map-marker user-profile-icon"></i> {{ $account->city }}, {{ $account->country }}
-                            </li>
-                        </ul>
-                        {!! Form::submit('Editer compte', ['class' => 'btn btn-success', 'files' => true, 'form' => 'edit_profile']) !!}
+                        {!! Form::open(['method' => 'post', 'url' => route('avatar'), 'files' => true, 'class' => 'form-horizontal form-label-left']) !!}
+                        <br>
+                            {!! Form::file('avatar', null) !!}
+                        <br>
+                            {!! Form::submit('Changer avatar', ['class' => 'btn btn-info']) !!}
+
+                        {!! Form::close() !!}
                     </div>
 
                     <div class="col-md-9 col-sm-9 col-xs-12">
@@ -52,6 +54,7 @@
                         <div class="col-md-6 col-sm-6 col-xs-12 form-group">
                             {!! Form::label('name', 'Nom * :') !!}
                             {!! Form::text('name', $account->name, ['class' => 'form-control']) !!}
+                            {!! $errors->first('name', '<small class="help-block">:message</small>') !!}
                         </div>
 
                         <div class="col-md-6 col-sm-6 col-xs-12 form-group">
@@ -104,11 +107,6 @@
                             <div class="col-md-4 col-sm-4 col-xs-4">
                                 A: {!! Form::radio('sex', 'o', $account->sex == 'o' ? true : false) !!}
                             </div>
-                        </div>
-
-                        <div class="col-md-12 col-sm-12 col-xs-12  form-group">
-                            {!! Form::label('avatar', 'Avatar * :') !!}
-                            {!! Form::file('avatar', ['file_extension' => '.png']) !!}
                         </div>
 
                         {!! Form::close() !!}

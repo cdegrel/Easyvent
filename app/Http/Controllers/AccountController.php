@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AccountRequest;
 use App\Models\Account;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
-use Intervention\Image\Image;
+use Illuminate\Support\Facades\Auth;
+use Image;
 
 class AccountController extends Controller
 {
@@ -40,6 +41,21 @@ class AccountController extends Controller
         //
     }
 
+    public function storeAvatar(Request $request)
+    {
+        if($request->hasFile('avatar')){
+            $avatar = $request->file('avatar');
+            $filename = time().'.'.$avatar->getClientOriginalExtension();
+            Image::make($avatar)->resize(220, 220)->save(public_path('/uploads/avatars/'.$filename));
+
+            $account = Account::findOrFail(Auth::user()->id);
+            $account->avatar = $filename;
+            $account->save();
+        }
+
+        return redirect()->route('account.edit', Auth::user()->id);
+    }
+
     /**
      * Display the specified resource.
      *
@@ -69,11 +85,10 @@ class AccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AccountRequest $request, $id)
     {
         if($request->ajax()){
             $account = Account::findOrFail($id);
-            $this->updateAvatar($request);
 
             if($account->update($request->all()))
                 return response()->json(['msg' => 'Profil utilisateur édité !'], 200);
@@ -91,17 +106,5 @@ class AccountController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    /**
-     * @param Request $request
-     */
-    private function updateAvatar(Request $request)
-    {
-        if($request->hasFile('avatar')){
-            $avatar = $request->file('avatar');
-            $filename = time().'.'.$avatar->getClientOriginalExtension();
-            Image::make($avatar)->resize(220, 220)->save(public_path('img/avatars/'.$filename));
-        }
     }
 }
